@@ -24,7 +24,7 @@ package practice;
 //}
 public class Account {
 	private  String accountNo;
-	private int Zandaka;
+	public int zandaka;
 	private AccountType accountType;
 	public static final int FUTSU = 1;
 	public static final int TOUZA = 2;
@@ -39,10 +39,10 @@ public class Account {
 		this.accountNo = accountNo;
 	}
 	public int getZandaka() {
-		return Zandaka;
+		return zandaka;
 	}
 	public void setZandaka(int zandaka) {
-		Zandaka = zandaka;
+		this.zandaka = zandaka;
 	}
 	public AccountType getAccountType() {
 		return accountType;
