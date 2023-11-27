@@ -1,6 +1,9 @@
 package practice;
 import java.util.Date;
-import java.util.Objects;
+
+import org.apache.commons.lang.builder.CompareToBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
 public class Book implements Comparable<Book>,Cloneable{
 	private String title;
@@ -29,36 +32,20 @@ public class Book implements Comparable<Book>,Cloneable{
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	//①書名と発行日が同じであれば等価
-	public boolean equals(Object o) {
-		if (o == this) return true;
-		if(!(o instanceof Account)) return false;
-		Book r = (Book)o;
-		
-		if(!this.title.trim().equals(r.title.trim())){
-			return false;
-		}
-		if(!this.publishDate.equals(r.publishDate)){
-			return false;
-		}
-		
-		return true;
+	//①書名と発行日とコメントが同じであれば等価
+	public boolean equals(Object o) {		
+		 return EqualsBuilder.reflectionEquals(this, o);
 	}
 	//①HashSet対応
-	public int hashcode() {
-		return Objects.hash(this.title,this.publishDate,this.comment);
-	}
+//	public int hashcode() {
+//		return Objects.hash(this.title,this.publishDate,this.comment);
+//	}
+	public int hashcode(){
+	return HashCodeBuilder.reflectionHashCode(this);
+}
 	//②発行日が古い順を自然順序とする
-	@Override
 	public int compareTo(Book o) {
-		// TODO 自動生成されたメソッド・スタブ
-		if(this.publishDate.after(o.publishDate)) {
-			return -1;
-		}
-		if(this.publishDate.before(o.publishDate)) {
-			return 1;
-		}
-		return 0;
+		return CompareToBuilder.reflectionCompare(this, o);
 	}
 	
 	//③深いコピー
