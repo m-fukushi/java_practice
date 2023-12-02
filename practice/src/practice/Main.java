@@ -1,56 +1,37 @@
 package practice;
-import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException{
-    	//通常try-catch
-//    	FileWriter fw = null;
-//    	try {
-//    		fw = new FileWriter("rpgsave.dat",true);
-//    		fw.write('A');
-//    		fw.flush();
-//    	}catch(IOException e){
-//    		System.out.println("ファイル書き込みエラーです");
-//    	}finally {
-//    		if(fw != null) {
-//    			try {
-//    				fw.close();
-//    			}catch(IOException e2) {}
-//    		}
+//    	String msg = "第一土曜日は資源ごみの回収です";
+//    	Reader sr =new StringReader(msg);
+//    	System.out.print((char)sr.read());
+//    	System.out.print((char)sr.read());
+    	
+//    	ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//    	baos.write(65);
+//    	baos.write(66);
+//    	byte[] data = baos.toByteArray();
+//    	for(byte b: data) {
+//    		System.out.println(b);
 //    	}
     	
-    	//try-with-resourse
-    	try (
-    			FileWriter fw = new FileWriter("rpgsave.dat",true);
-    		)
-    	{    		
-    		fw.write('A');
-    		fw.flush();
-    	}    	
-    	catch(IOException e){
-    		System.out.println("ファイル書き込みエラーです");
-    	}
+    	//フィルタの例
+//    	FileOutputStream fos = new FileOutputStream("data.txt");
+//    	CipherOutputStream cos = new CipherOutputStream(fos,algo);
+//    	OutputStreamWriter osw = new OutputStreamWriter(cos);
+//    	osw.write("AB");
+    	FileReader fr = new FileReader("rpgsave.dat");
+    	BufferedReader br = new BufferedReader(fr);
+    	String line = null;
+    	while((line = br.readLine()) != null) {
+    		System.out.println(line);    		
+    	};
+    	br.close();
     	
     	
-//    	FileOutputStream fos = new FileOutputStream("rpgsave.dat",true);
-//    	fos.write(65);
-//    	fos.flush();
-//    	fos.close();
-//       FileWriter fw = new FileWriter("G:\\rpgsave.dat",true);
-//       fw.write('A');
-//       fw.flush();
-//       fw.close();
-//       FileReader fr = new FileReader("G:\\rpgsave.dat");
-//       System.out.println("すべてのデータを読んで表示します");
-//       int i = fr.read();
-//       while(i != -1) {
-//    	   char c = (char)i;
-//    	   System.out.println(c);
-//    	   i= fr.read();
-//       }
-//       System.out.println("データの末尾に到達しました");
-//       fr.close();
     }
 }
 
