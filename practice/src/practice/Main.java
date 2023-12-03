@@ -1,37 +1,47 @@
 package practice;
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.zip.GZIPOutputStream;
 
 public class Main {
     public static void main(String[] args) throws IOException{
-//    	String msg = "第一土曜日は資源ごみの回収です";
-//    	Reader sr =new StringReader(msg);
-//    	System.out.print((char)sr.read());
-//    	System.out.print((char)sr.read());
-    	
-//    	ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//    	baos.write(65);
-//    	baos.write(66);
-//    	byte[] data = baos.toByteArray();
-//    	for(byte b: data) {
-//    		System.out.println(b);
-//    	}
-    	
-    	//フィルタの例
-//    	FileOutputStream fos = new FileOutputStream("data.txt");
-//    	CipherOutputStream cos = new CipherOutputStream(fos,algo);
-//    	OutputStreamWriter osw = new OutputStreamWriter(cos);
-//    	osw.write("AB");
-    	FileReader fr = new FileReader("rpgsave.dat");
-    	BufferedReader br = new BufferedReader(fr);
-    	String line = null;
-    	while((line = br.readLine()) != null) {
-    		System.out.println(line);    		
-    	};
-    	br.close();
-    	
-    	
+    	//
+    	//コピー元ファイル:args[0]
+    	//コピー先ファイル：args[1]
+    	FileInputStream fi = null;
+    	FileOutputStream fo =null;
+    	GZIPOutputStream zip =null;
+    	try {
+	    		fi = new FileInputStream(args[0]);
+		    	fo = new FileOutputStream(args[1]);
+		    	
+		    	BufferedOutputStream bw = new BufferedOutputStream(fo);
+		    	zip = new GZIPOutputStream(bw);
+		    	
+//		    	byte[] readData = fi.readAllBytes();
+		    	
+//		    	for(byte b : readData) {
+//		    		fo.write(b);    		
+//		    	}
+		    	int readData = fi.read();
+		    	while(readData != -1){
+			    	zip.write(readData);
+			    	readData = fi.read();
+		    	}
+		    	zip.flush();
+    	}catch(IOException e) {    		
+    		System.out.println("エラーでやんす");
+    	}finally {
+    		try {
+		    	fi.close();
+		    	zip.close();
+	    	}catch(IOException e) { 
+	    		
+	    	}
+    		
+    	}
     }
 }
 
