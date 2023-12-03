@@ -1,47 +1,44 @@
 package practice;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.zip.GZIPOutputStream;
+import java.util.ResourceBundle;
 
 public class Main {
     public static void main(String[] args) throws IOException{
-    	//
-    	//コピー元ファイル:args[0]
-    	//コピー先ファイル：args[1]
-    	FileInputStream fi = null;
-    	FileOutputStream fo =null;
-    	GZIPOutputStream zip =null;
-    	try {
-	    		fi = new FileInputStream(args[0]);
-		    	fo = new FileOutputStream(args[1]);
-		    	
-		    	BufferedOutputStream bw = new BufferedOutputStream(fo);
-		    	zip = new GZIPOutputStream(bw);
-		    	
-//		    	byte[] readData = fi.readAllBytes();
-		    	
-//		    	for(byte b : readData) {
-//		    		fo.write(b);    		
-//		    	}
-		    	int readData = fi.read();
-		    	while(readData != -1){
-			    	zip.write(readData);
-			    	readData = fi.read();
-		    	}
-		    	zip.flush();
-    	}catch(IOException e) {    		
-    		System.out.println("エラーでやんす");
-    	}finally {
-    		try {
-		    	fi.close();
-		    	zip.close();
-	    	}catch(IOException e) { 
-	    		
-	    	}
-    		
-    	}
+//    	FileReader fr = new FileReader("rpgdata.csv");
+//    	Iterable<CSVRecord> records = CSVFormat.DEFAULT.parse(fr);
+//    	for(CSVRecord r: records) {
+//    		String name = r.get(0);
+//    		String hp = r.get(1);
+//    		String mp = r.get(2);
+//    		System.out.println(name+"/"+hp+"/"+mp);
+//    	}
+//    	fr.close();
+    	
+    	//プロパティファイルを読み取る
+//    	Reader fr = new FileReader("rpgdata.properties");
+//    	Properties p = new Properties();
+//    	p.load(fr);
+//    	String name = p.getProperty("heroName");
+//    	String strHp = p.getProperty("heroHp");
+//    	//数字として使う場合、要変換
+//    	int hp = Integer.parseInt(strHp);    	
+//    	System.out.println("勇者の名前:"+name);
+//    	System.out.println("勇者のHP:"+strHp);
+//    	
+//    	fr.close();
+    	//プロパティファイルへの書き込み
+//    	Writer fw = new FileWriter("rpgdata.properties");
+//    	Properties p = new Properties();
+//    	p.setProperty("heroName", "アサカ");
+//    	p.setProperty("heroHｐ", "62");
+//    	p.setProperty("heroMp", "45");
+//    	p.store(fw, "勇者の情報");
+//    	fw.close();
+    	
+    	//ResourseBundleを用いたファイルの読み取り
+    	ResourceBundle rb = ResourceBundle.getBundle("workspace\\practice\\practice\\rpgdata");
+    	String heroName = rb.getString("heroName");
+    	System.out.println("勇者の名前:"+heroName);
     }
 }
 
