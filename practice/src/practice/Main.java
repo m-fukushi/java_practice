@@ -1,37 +1,27 @@
 package practice;
 
-import java.io.File;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class Main {
   public static void main(String[] args) throws Exception {
-	    ObjectMapper mapper = new ObjectMapper();
-	    JsonNode root = mapper.readTree(new File("hero.json"));
-	    JsonNode hero = root.get("hero");
-	    JsonNode weapon = hero.get("weapon");
-	    System.out.println("名前:" + hero.get("name").textValue());
-	    System.out.println("武器:" + weapon.get("name").textValue());
+	   Hero hero1 = new Hero("ミナト",75,18);
+	   //①インスタンスの直列化と保存
+	   FileOutputStream fos = new FileOutputStream("rpgsave.dat");
+	   ObjectOutputStream oos = new ObjectOutputStream(fos);
+	   oos.writeObject(hero1);
+	   oos.flush();
+	   oos.close();
+	   //②ファイルからインスタンス復元
+	   FileInputStream fis = new FileInputStream("rpgsave.dat");
+	   ObjectInputStream ois = new ObjectInputStream(fis);
+	   Hero hero2 = (Hero)ois.readObject();
+	   ois.close();
+	   System.out.println(hero2.getName());
+	   System.out.println(hero2.getHp());
+	   System.out.println(hero2.getMp());
   }
-//    InputStream is = new FileInputStream("rpgsave.xml");
-//    Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(is);  // (1)
-//    Element hero = doc.getDocumentElement();            // (2)
-//    Element weapon = findChildByTag(hero, "weapon");    // (3)
-//    Element power = findChildByTag(weapon, "power");    // (4)
-//    String value = power.getTextContent();              // (5)
-//  }
-//  // 指定された名前を持つタグの最初の子タグを返す
-//  static Element findChildByTag(Element self, String name) throws Exception {
-//    NodeList children = self.getChildNodes();           // すべての子を取得
-//    for (int i = 0; i < children.getLength(); i++) {
-//      if (children.item(i) instanceof Element) {
-//        Element e = (Element)children.item(i);
-//        if (e.getTagName().equals(name)) {              // タグ名を照合
-//          return e;
-//        }
-//      }
-//    }
-//    return null;
-//  }
+	   
 }
