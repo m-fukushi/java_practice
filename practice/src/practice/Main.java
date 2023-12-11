@@ -1,43 +1,46 @@
 package practice;
 
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class Main {
-  public static void main(String[] args) throws Exception {
-	  //7-1
-//	  Reader fr = new FileReader("G:\\OneDrive\\ドキュメント\\sukkiri-javap3-codes\\chap07\\quizans07-01\\pref.properties");
-//	  Properties p = new Properties();
-//	  p.load(fr);
-//	  String aichi_capital = p.getProperty("aichi.capital");
-//	  String aichi_food = p.getProperty("aichi.food");
-//	  System.out.println(aichi_capital+":"+aichi_food);
+  public static void main(String[] args) throws IOException {
+	  //8-1
+//	  URL url = new URL("https://dokojava.jp");
+//	  InputStream is = url.openStream();
+//	  InputStreamReader isr = new InputStreamReader(is);
+//	  int i = isr.read();
+//	  while(i != -1) {
+//		  System.out.print((char)i);
+//		  i = isr.read();
+//	  }
+//	  isr.close();  
 	  
-	  
-	  //7-2 練習問題
-	  //System.out.println("java.class.path :" + System.getProperty("java.class.path"));
-//	  ResourceBundle rb = ResourceBundle.getBundle("pref");
-//	  String aichi_capital = rb.getString("aichi.capital");
-//	  String aichi_food = rb.getString("aichi.food");
-//	  System.out.println(aichi_capital+":"+aichi_food);
-//  
-	  //7-3練習問題
-	  Employee em = new Employee();
-	  em.name = "田中太郎";
-	  em.age = 41;
-	  Department dm =new Department();
-	  dm.name ="総務部";	  
-	  dm.leader = em;
-	  
-	  FileOutputStream fos = new FileOutputStream("company.dat");
-	  ObjectOutputStream oos = new ObjectOutputStream(fos);
-	  oos.writeObject(dm);
-	  oos.flush();
-	  oos.close();
-	  
-	  
-	  
-	  
-  }
+//	  8-2
+//	  Socket sock = new Socket("dokojava.jp",80);
+//	  InputStream is = sock.getInputStream();
+//	  OutputStream os = sock.getOutputStream();
+//	  os.write("GET /index.html HTTP/1.0\r\n".getBytes());
+//	  os.write("\r\n".getBytes());
+//	  os.flush();
+//	  
+//	  InputStreamReader isr = new InputStreamReader(is);
+//	  int i = isr.read();
+//	  while(i != -1) {
+//	  System.out.print((char)i);
+//	  i = isr.read();
+//	  }
+//	  isr.close();  
+//	  
+	  //8-3
+	  System.out.println("起動完了");
+	  ServerSocket svSock = new ServerSocket(39648);
+	  Socket sock = svSock.accept();
+	  System.out.println(sock.getInetAddress()+"から接続");
+	  sock.getOutputStream().write("WELCOME".getBytes());
+	  sock.getOutputStream().flush();
+	  sock.close();
+ }
 	   
 }
