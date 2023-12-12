@@ -1,46 +1,43 @@
 package practice;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
 
 public class Main {
   public static void main(String[] args) throws IOException {
 	  //8-1
-//	  URL url = new URL("https://dokojava.jp");
-//	  InputStream is = url.openStream();
-//	  InputStreamReader isr = new InputStreamReader(is);
-//	  int i = isr.read();
-//	  while(i != -1) {
-//		  System.out.print((char)i);
-//		  i = isr.read();
-//	  }
-//	  isr.close();  
+	  URL url = new URL("https://dokojava.jp/favicon.ico");
+	  InputStream is = url.openStream();
+	  OutputStream os = new FileOutputStream("dj.ico");
+	  int i = is.read();	  
+	 while(i !=0) {
+		 os.write((byte)i);
+		 i = is.read();
+	 }
+	  is.close();
+	  os.flush();
+	  os.close();
 	  
-//	  8-2
-//	  Socket sock = new Socket("dokojava.jp",80);
+	  
+//	 //8-2
+//	  Socket sock = new Socket("smtp.example.com",60025);
 //	  InputStream is = sock.getInputStream();
 //	  OutputStream os = sock.getOutputStream();
-//	  os.write("GET /index.html HTTP/1.0\r\n".getBytes());
-//	  os.write("\r\n".getBytes());
+//	  os.write("HELO smtp.example.com".getBytes());
+//	  os.write("MAIL FROM: asaka@example.com".getBytes());
+//	  os.write("RCPT TO: minato@example.com".getBytes());
+//	  os.write("DATA".getBytes());
+//	  os.write("From: asaka@example.com".getBytes());
+//	  os.write("Subject: Please send me your RPG".getBytes());
+//	  os.write("Hello minato. I would like to play your RPG.\r\n".getBytes());
+//	  os.write("Could you please send it to me ?".getBytes());
+//	  os.write("QUIT".getBytes());
 //	  os.flush();
 //	  
-//	  InputStreamReader isr = new InputStreamReader(is);
-//	  int i = isr.read();
-//	  while(i != -1) {
-//	  System.out.print((char)i);
-//	  i = isr.read();
-//	  }
-//	  isr.close();  
-//	  
-	  //8-3
-	  System.out.println("起動完了");
-	  ServerSocket svSock = new ServerSocket(39648);
-	  Socket sock = svSock.accept();
-	  System.out.println(sock.getInetAddress()+"から接続");
-	  sock.getOutputStream().write("WELCOME".getBytes());
-	  sock.getOutputStream().flush();
-	  sock.close();
+//	  sock.close();
  }
 	   
 }
