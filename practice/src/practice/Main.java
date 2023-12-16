@@ -1,43 +1,46 @@
 package practice;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class Main {
   public static void main(String[] args) throws IOException {
-	  //8-1
-	  URL url = new URL("https://dokojava.jp/favicon.ico");
-	  InputStream is = url.openStream();
-	  OutputStream os = new FileOutputStream("dj.ico");
-	  int i = is.read();	  
-	 while(i !=0) {
-		 os.write((byte)i);
-		 i = is.read();
+	 try {
+		 Class.forName("org.h2.Driver");		
+	 } catch(ClassNotFoundException e) {
+		 throw new IllegalStateException("ドライバのロードに失敗しました");		
 	 }
-	  is.close();
-	  os.flush();
-	  os.close();
-	  
-	  
-//	 //8-2
-//	  Socket sock = new Socket("smtp.example.com",60025);
-//	  InputStream is = sock.getInputStream();
-//	  OutputStream os = sock.getOutputStream();
-//	  os.write("HELO smtp.example.com".getBytes());
-//	  os.write("MAIL FROM: asaka@example.com".getBytes());
-//	  os.write("RCPT TO: minato@example.com".getBytes());
-//	  os.write("DATA".getBytes());
-//	  os.write("From: asaka@example.com".getBytes());
-//	  os.write("Subject: Please send me your RPG".getBytes());
-//	  os.write("Hello minato. I would like to play your RPG.\r\n".getBytes());
-//	  os.write("Could you please send it to me ?".getBytes());
-//	  os.write("QUIT".getBytes());
-//	  os.flush();
-//	  
-//	  sock.close();
+	 Connection con = null;
+	 try {
+		 //DB情報
+		 con = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/*","*","*");	 
+		 
+		 //ここから実際のSQL送信処理
+		PreparedStatement pstmt = con.prepareStatement("DELETE FROM MONSTERS WHERE HP<= ? OR NAME = ?");
+		pstmt.setInt(1, 10);
+		pstmt.setString(2, "ゾンビ");
+		int r = pstmt.executeUpdate();
+		if (r !=0) {
+			System.out.println(r+"件のモンスターを削除しました");
+		}else {
+			System.out.println("該当するモンスターはありませんでした");
+		}
+		pstmt.close();
+		 
+	 }catch(SQLException e){
+		 e.printStackTrace();
+	 }finally {
+		 if(con != null) {
+			 try {
+				 con.close();				 
+			 }catch(SQLException e) {
+				 e.printStackTrace();
+			 }
+		 }
+	 }
  }
 	   
 }
